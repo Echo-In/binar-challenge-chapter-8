@@ -1,0 +1,535 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is documentation of Players api.",
+    "version": "1.0.0",
+    "title": "Swagger of Players API",
+    "contact": {
+      "email": "m.iqbal@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "player",
+      "description": "Everything about player api"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/players": {
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Get all players list",
+        "description": "Get all players list",
+        "operationId": "getPlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Search Parameter",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PlayerBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            }
+          },
+          "500": {
+            "description": "Some error occurred while retrieving players.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "The user ID.",
+                  "example": "Some error occurred while retrieving players."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Create new player",
+        "description": "",
+        "operationId": "addPlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "order placed for purchasing the pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlayerCreate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SUCCESS",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "description": "Success Message.",
+                  "example": "SUCCESS"
+                },
+                "message": {
+                  "type": "object",
+                  "example": {
+                    "$ref": "#/definitions/PlayerBody"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Some error occurred while creating the Player."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Find player by ID",
+        "description": "Returns a single player",
+        "operationId": "getPlayerById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of player to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "description": "Success Message.",
+                  "example": "SUCCESS"
+                },
+                "message": {
+                  "type": "object",
+                  "example": {
+                    "$ref": "#/definitions/PlayerBody"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error retireving Player with id 1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Updated player",
+        "description": "",
+        "operationId": "updatePlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id todo item that need to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlayerBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "SUCCESS"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Player was updated successfully."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "annot update Player with id= 1. Maybe Player was not found or req.body is empty!"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error updating Player with id= 1."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Delete player",
+        "description": "",
+        "operationId": "deletePlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id todo item that needs to be deleted",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "SUCCESS"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Player was deleted successfully!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Cannot delete Player with id=1. Maybe Player was not found!"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Could not delete Player with id= 1"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/exp/{id}": {
+      "post": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Update player exp",
+        "description": "",
+        "operationId": "updatePlayerExp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of player to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "exp to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlayerExp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "SUCCESS"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Player with id=1 has more experience."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "exp field cannot be empty."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "FAILED"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error updating Player exp with id=1."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Player": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lvl": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "xml": {
+        "name": "Player"
+      }
+    },
+    "PlayerBody": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lvl": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "PlayerBody"
+      }
+    },
+    "PlayerCreate": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lvl": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "PlayerCreateBody"
+      }
+    },
+    "PlayerExp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "experience": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "PlayerExp"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
